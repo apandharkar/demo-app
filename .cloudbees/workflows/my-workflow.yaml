@@ -28,7 +28,7 @@ jobs:
     needs: [ci-job]
     steps:
       - uses: docker://alpine/git:latest
-        run:
+        run: |
            if ["${{ needs.ci-job.outputs.preprod-changes }}" == "true"]; then
               echo "Deploying preprod"
            fi
@@ -36,7 +36,7 @@ jobs:
     needs: [ci-job]
     steps:
       - uses: docker://alpine/git:latest
-        run:
+        run: |
            if ["${{ needs.ci-job.outputs.prod-changes }}" == "true"]; then
             echo "Deploying prod"
            fi

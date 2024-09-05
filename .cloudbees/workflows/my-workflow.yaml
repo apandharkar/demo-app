@@ -21,7 +21,7 @@ jobs:
         id: changes
         uses: docker://alpine/git:latest
         run: |
-          echo "true" > $CLOUDBEES_OUTPUTS/preprod-changed
+          echo "false" > $CLOUDBEES_OUTPUTS/preprod-changed
   preprod-deploy:
     needs: [ci-job]
     steps:

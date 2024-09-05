@@ -18,4 +18,4 @@ jobs:
       - name: Run tests
         uses: docker://alpine/git:latest
         run: |
-          git show --name-only
+          git log -1 --stat

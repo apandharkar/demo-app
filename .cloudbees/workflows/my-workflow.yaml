@@ -20,4 +20,3 @@ jobs:
         run: |
           git --version
           git log -1 --stat
-          git show --name-only

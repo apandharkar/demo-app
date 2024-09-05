@@ -35,7 +35,7 @@ jobs:
   preprod-deploy:
     needs:
       - ci-job
-    if: ${{ !!jobs.ci-job.outputs.preprod-changed }}
+    if: ${{ jobs.hack.outputs.preprod-changed == "true" }}
     permissions:
       scm-token-own: read
       scm-token-org: read

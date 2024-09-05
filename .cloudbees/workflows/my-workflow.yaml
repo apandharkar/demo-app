@@ -23,7 +23,7 @@ jobs:
         uses: docker://alpine/git:latest
         run: |
           echo "true" > $CLOUDBEES_OUTPUTS/preprod-changes
-          echo "true" > $CLOUDBEES_OUTPUTS/prod-changes
+          echo "false" > $CLOUDBEES_OUTPUTS/prod-changes
   preprod-deploy:
     needs: [ci-job]
     steps:

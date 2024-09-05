@@ -33,3 +33,12 @@ jobs:
             echo "no preprod changes"
             preprod_changes=False
           fi
+  preprod-deploy:
+    permissions:
+      scm-token-own: read
+      scm-token-org: read
+      id-token: write
+    steps:
+      - uses: cloudbees-io/checkout@v1
+        run:
+           echo "$CLOUDBEES_OUTPUTS"

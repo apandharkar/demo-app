@@ -20,6 +20,7 @@ jobs:
       - name: checkout
         uses: cloudbees-io/checkout@v1
       - name: Run tests
+        id: changes
         uses: docker://alpine/git:latest
         run: |
           set +x

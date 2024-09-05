@@ -18,6 +18,7 @@ jobs:
       - name: Run tests
         uses: docker://alpine/git:latest
         run: |
+          set -x
           git log -1 --stat | grep -c "cloudbees/workflows/my-workflow.yaml"
           if  [ $(git log -1 --stat | grep -c "cloudbees/workflows/my-workflow.yaml") == "1" ]; then
             echo "Preprod Changes"

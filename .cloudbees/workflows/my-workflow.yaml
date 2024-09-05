@@ -26,15 +26,17 @@ jobs:
           echo "true" > $CLOUDBEES_OUTPUTS/prod-changes
   preprod-deploy:
     needs: [ci-job]
-    if: "${{ needs.ci-job.outputs.preprod-changes == 'true' }}"
     steps:
       - uses: docker://alpine/git:latest
         run:
-           echo "${{ needs.ci-job.outputs.preprod-changes }}"
+           if ["${{ needs.ci-job.outputs.preprod-changes }} == "true"]
+           echo "Deploying preprod"
+           fi
   prod-deploy:
     needs: [ci-job]
-    if: "${{ needs.ci-job.outputs.prod-changes == 'true' }}"
     steps:
       - uses: docker://alpine/git:latest
         run:
-           echo "${{ needs.ci-job.outputs.prod-changes }
+           if ["${{ needs.ci-job.outputs.prod-changes }} == "true"]
+           echo "Deploying prod"
+           fi

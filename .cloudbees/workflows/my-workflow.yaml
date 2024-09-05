@@ -27,20 +27,9 @@ jobs:
           git log -1 --stat | grep -c "cloudbees/workflows/my-workflow.yaml"
           if  [ $(git log -1 --stat | grep -c "cloudbees/workflows/my-workflow.yaml") == "1" ]; then
             echo "Preprod Changes"
+            echo "$CLOUDBEES_OUTPUTS"
             echo "true" > $CLOUDBEES_OUTPUTS/preprod-changed 
           else
             echo "no preprod changes"
             preprod_changes=False
           fi
-  preprod-deploy:
-    needs:
-      - ci-job
-    if: ${{ jobs.hack.outputs.preprod-changed == 'true' }}
-    permissions:
-      scm-token-own: read
-      scm-token-org: read
-      id-token: write
-    steps:
-      - uses: cloudbees-io/checkout@v1
-        run:
-           echo "hello"

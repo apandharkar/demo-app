@@ -34,8 +34,7 @@ jobs:
             preprod_changes=False
           fi
   preprod-deploy:
-    needs:
-      - ci-job
+    needs: [ci-job]
     if: ${{ needs.outputs.preprod-changed }}
     permissions:
       scm-token-own: read

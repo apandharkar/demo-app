@@ -9,6 +9,10 @@ on:
 
 jobs:
   ci-job:
+    permissions:
+      scm-token-own: read
+    outputs:
+      preprod-changed: ${{ steps.changes.outputs.preprod-changed }}
     steps:
       - uses: docker://alpine/git:latest
         run: |

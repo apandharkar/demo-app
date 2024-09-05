@@ -16,7 +16,7 @@ jobs:
       - name: checkout
         uses: cloudbees-io/checkout@v1
       - name: Run tests
-        uses: docker://golang:1.20
+        uses: docker://alpine/git:latest
         run: |
           ls -ltr
           git --version

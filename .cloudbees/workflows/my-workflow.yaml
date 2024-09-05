@@ -10,13 +10,13 @@ on:
 jobs:
   ci-job:
     steps:
-      - uses: docker://alpine/git:2.39.3
+      - uses: docker://alpine/git:latest
         run: |
           git config --global --add safe.directory /cloudbees/workspace
       - name: checkout
         uses: cloudbees-io/checkout@v1
       - name: Run tests
-        uses: docker://alpine/git:2.39.3
+        uses: docker://alpine/git:latest
         run: |
           git --version
           git log -1 --stat

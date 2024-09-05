@@ -27,7 +27,7 @@ jobs:
             echo "no preprod changes"
             preprod_changes=False
           fi
-  prod-deploy:
+  preprod-deploy:
     needs:
       - ci-job
     if: ${{ !!jobs.ci-job.outputs.preprod-changed }}

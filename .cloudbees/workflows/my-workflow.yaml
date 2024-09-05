@@ -19,4 +19,4 @@ jobs:
         uses: docker://alpine/git:latest
         run: |
           git --version
-          git log -1 --stat
+          git log -1 --stat | grep "cloudbees/workflows/my-workflow.yaml"

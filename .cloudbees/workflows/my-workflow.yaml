@@ -9,8 +9,6 @@ on:
 
 jobs:
   ci-job:
-    permissions:
-      scm-token-own: read
     outputs:
       preprod-changed: ${{ steps.changes.outputs.preprod-changed }}
     steps:
@@ -23,23 +21,10 @@ jobs:
         id: changes
         uses: docker://alpine/git:latest
         run: |
-          set +x
-          git log -1 --stat | grep -c "cloudbees/workflows/my-workflow.yaml"
-          if  [ $(git log -1 --stat | grep -c "cloudbees/workflows/my-workflow.yaml") == "1" ]; then
-            echo "Preprod Changes"
-            echo "$CLOUDBEES_OUTPUTS"
-            echo "true" > $CLOUDBEES_OUTPUTS/preprod-changed 
-          else
-            echo "no preprod changes"
-            preprod_changes=False
-          fi
+          echo "true" > $CLOUDBEES_OUTPUTS/preprod-changed
   preprod-deploy:
     needs: [ci-job]
-    if: ${{ needs.outputs.preprod-changed }}
-    permissions:
-      scm-token-own: read
-      scm-token-org: read
-      id-token: write
+    if: ${{ needs.ci-job.outputs.preprod-changed }}
     steps:
       - uses: docker://alpine/git:latest
         run:

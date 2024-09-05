@@ -24,8 +24,8 @@ jobs:
           echo "true" > $CLOUDBEES_OUTPUTS/preprod-changed
   preprod-deploy:
     needs: [ci-job]
-    if: ${{ needs.ci-job.outputs.preprod-changed }}
     steps:
       - uses: docker://alpine/git:latest
         run:
            echo "$CLOUDBEES_OUTPUTS"
+           echo "${{ needs.ci-job.outputs.preprod-changed }}"

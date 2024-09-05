@@ -10,7 +10,8 @@ on:
 jobs:
   ci-job:
     outputs:
-      preprod-changed: ${{ steps.changes.outputs.preprod-changed }}
+      preprod-changes: ${{ steps.changes.outputs.preprod-changes }}
+      prod-changes: ${{ steps.changes.outputs.prod-changes }}
     steps:
       - uses: docker://alpine/git:latest
         run: |
@@ -21,11 +22,19 @@ jobs:
         id: changes
         uses: docker://alpine/git:latest
         run: |
-          echo "false" > $CLOUDBEES_OUTPUTS/preprod-changed
+          echo "false" > $CLOUDBEES_OUTPUTS/preprod-changes
+          echo "true" > $CLOUDBEES_OUTPUTS/prod-changes
   preprod-deploy:
     needs: [ci-job]
+    if: "${{ needs.ci-job.outputs.preprod-changes == 'true' }}"
     steps:
       - uses: docker://alpine/git:latest
         run:
-           echo "$CLOUDBEES_OUTPUTS"
-           echo "${{ needs.ci-job.outputs.preprod-changed }}"
+           echo "${{ needs.ci-job.outputs.preprod-changes }}"
+  prod-deploy:
+    needs: [ci-job]
+    if: "${{ needs.ci-job.outputs.prod-changes == 'true' }}"
+    steps:
+      - uses: docker://alpine/git:latest
+        run:
+           echo "${{ needs.ci-job.outputs.prod-changes }

@@ -39,6 +39,6 @@ jobs:
       scm-token-org: read
       id-token: write
     steps:
-      - uses: cloudbees-io/checkout@v1
+      - uses: docker://alpine/git:latest
         run:
            echo "$CLOUDBEES_OUTPUTS"

@@ -27,6 +27,13 @@ jobs:
   preprod-deploy:
     needs: [ci-job]
     steps:
+      - name: Configure AWS credentials Preprod
+        uses: cloudbees-io/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume:  ${{ vars.oidc_staging_iam_role }}
+          role-session-name: Workflow
+          role-duration-seconds: 3600
       - uses: docker://alpine/git:latest
         run: |
            preprod_changed=${{ needs.ci-job.outputs.preprod-changes }}

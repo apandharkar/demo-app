@@ -26,6 +26,10 @@ jobs:
           echo "false" > $CLOUDBEES_OUTPUTS/prod-changes
   preprod-deploy:
     needs: [ci-job]
+    permissions:
+      scm-token-own: read
+      scm-token-org: read
+      id-token: write
     steps:
       - name: Configure AWS credentials Preprod
         uses: cloudbees-io/configure-aws-credentials@v1

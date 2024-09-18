@@ -21,7 +21,11 @@ jobs:
       - name: Run tests
         id: changes
         uses: docker://alpine/git:latest
+        env:
+          iam_role: ${{ vars.oidc_staging_iam_role }}
         run: |
+          env
+          echo $iam_role
           echo "true" > $CLOUDBEES_OUTPUTS/preprod-changes
           echo "false" > $CLOUDBEES_OUTPUTS/prod-changes
   preprod-deploy:

@@ -28,6 +28,6 @@ jobs:
           git branch
           git fetch --unshallow
           #git diff
-          #commit=$(git log --format="%H" -n 1)
-          #echo $commit
-          #git diff --name-only $commit^
+          commit=$(git log --format="%H" -n 1)
+          echo $commit
+          git diff --name-only $commit^

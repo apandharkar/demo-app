@@ -26,7 +26,8 @@ jobs:
         run: |
           ls -ltr
           git branch
-          git diff
-          commit=$(git log --format="%H" -n 1)
-          echo $commit
-          git diff --name-only $commit^
+          git fetch --unshallow
+          #git diff
+          #commit=$(git log --format="%H" -n 1)
+          #echo $commit
+          #git diff --name-only $commit^

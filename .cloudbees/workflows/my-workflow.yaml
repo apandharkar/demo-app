@@ -27,4 +27,6 @@ jobs:
           ls -ltr
           git branch
           git diff
-          git log --format="%H" -n 1
+          commit=$(git log --format="%H" -n 1)
+          echo $commit
+          git diff --name-only $commit^

@@ -24,42 +24,4 @@ jobs:
         env:
           iam_role: ${{ vars.oidc_staging_iam_role }}
         run: |
-          env
-          echo $iam_role
-          echo "true" > $CLOUDBEES_OUTPUTS/preprod-changes
-          echo "false" > $CLOUDBEES_OUTPUTS/prod-changes
-  preprod-deploy:
-    needs: [ci-job]
-    permissions:
-      scm-token-own: read
-      scm-token-org: read
-      id-token: write
-    steps:
-      - name: Configure AWS credentials Preprod
-        uses: cloudbees-io/configure-aws-credentials@v1
-        with:
-          aws-region: us-east-1
-          role-to-assume:  ${{ vars.oidc_staging_iam_role }}
-          role-session-name: Workflow
-          role-duration-seconds: 3600
-      - uses: docker://alpine/git:latest
-        run: |
-           preprod_changed=${{ needs.ci-job.outputs.preprod-changes }}
-           echo $preprod_changed
-           if  [ $preprod_changed == "true" ] ; then
-              echo "Deploying preprod"
-           else 
-              echo "Not Deploying preprod"
-           fi
-  prod-deploy:
-    needs: [ci-job]
-    steps:
-      - uses: docker://alpine/git:latest
-        run: |
-           prod_changed=${{ needs.ci-job.outputs.prod-changes }}
-           echo $prod_changed
-           if [ $prod_changed == "true" ] ; then
-              echo "Deploying prod"
-           else 
-              echo "Not Deploying prod"
-           fi
+          git diff --name-only HEAD^ HEAD

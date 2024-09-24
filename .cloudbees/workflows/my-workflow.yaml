@@ -25,4 +25,5 @@ jobs:
           iam_role: ${{ vars.oidc_staging_iam_role }}
         run: |
           ls -ltr
+          git branch
           git diff --name-only HEAD^ HEAD

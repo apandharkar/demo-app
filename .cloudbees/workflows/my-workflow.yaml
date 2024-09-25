@@ -31,3 +31,4 @@ jobs:
           commit=$(git log --format="%H" -n 1)
           echo $commit
           git diff --name-only $commit^
+          echo ${{ cloudbees.version }}

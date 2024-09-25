@@ -72,4 +72,5 @@ func getEnvironment() string {
 		environment = "development"
 	}
 	return environment
+	
 }

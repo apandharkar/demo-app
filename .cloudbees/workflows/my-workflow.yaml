@@ -32,3 +32,4 @@ jobs:
           echo $commit
           git diff --name-only $commit^
           echo ${{ cloudbees.version }}
+          echo ${{ cloudbees.scm.branch }}

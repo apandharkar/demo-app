@@ -13,15 +13,10 @@ jobs:
       preprod-changes: ${{ steps.changes.outputs.preprod-changes }}
       prod-changes: ${{ steps.changes.outputs.prod-changes }}
     steps:
-      - uses: docker://alpine/git:latest
-        run: |
-          git config --global --add safe.directory /cloudbees/workspace
-      - name: checkout
-        uses: cloudbees-io/checkout@v1
       - name: Run tests
         id: changes
         uses: docker://alpine/git:latest
         env:
-          iam_role: ${{ cloudbees.scm.branch }}
+          iam_role: ${{ cloudbees.scm.branch }}${{ cloudbees-version }}
         run: |
           echo $iam_role

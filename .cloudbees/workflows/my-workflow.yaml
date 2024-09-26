@@ -22,6 +22,6 @@ jobs:
         id: changes
         uses: docker://alpine/git:latest
         env:
-          iam_role: ${{ cloudbees.version }}
+          iam_role: ${{ cloudbees.scm.branch }}
         run: |
           echo $iam_role

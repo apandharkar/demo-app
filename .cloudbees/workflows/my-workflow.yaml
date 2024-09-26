@@ -20,17 +20,8 @@ jobs:
         uses: cloudbees-io/checkout@v1
       - name: Run tests
         id: changes
-        uses: calculi-corp/cb-internal-shared-actions/build@v3
+        uses: docker://alpine/git:latest
         env:
-          iam_role: ${{ vars.oidc_staging_iam_role }}
+          iam_role: ${{ cloudbees.version }}${{ cloudbees.scm.branch != main && '-${{ cloudbees.scm.branch}}'  || '' }}
         run: |
-          ls -ltr
-          git branch
-          git fetch --unshallow
-          #git diff
-          commit=$(git log --format="%H" -n 1)
-          echo $commit
-          git diff --name-only $commit^
-          echo ${{ cloudbees.version }}
-          echo ${{ cloudbees.scm.branch }}
-          env
+          echo $iam_role

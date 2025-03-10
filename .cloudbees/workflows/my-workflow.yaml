@@ -8,29 +8,10 @@ on:
       - '**'
 
 jobs:
-  ci-job:
-    outputs:
-      preprod-changes: ${{ steps.changes.outputs.preprod-changes }}
-      prod-changes: ${{ steps.changes.outputs.prod-changes }}
+  build:
     steps:
-      - uses: docker://alpine/git:latest
+      - name: Say hello
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
         run: |
-          git config --global --add safe.directory /cloudbees/workspace
-      - name: checkout
-        uses: cloudbees-io/checkout@v1
-      - name: Run tests
-        id: changes
-        uses: docker://alpine/git:latest
-        env:
-          iam_role: ${{ vars.oidc_staging_iam_role }}
-        run: |
-          ls -ltr
-          git branch
-          git fetch --unshallow
-          #git diff
-          commit=$(git log --format="%H" -n 1)
-          echo $commit
-          git diff --name-only $commit^
-          echo ${{ cloudbees.version }}
-          echo ${{ cloudbees.scm.branch }}
-          env
+          echo "hello world - 1"

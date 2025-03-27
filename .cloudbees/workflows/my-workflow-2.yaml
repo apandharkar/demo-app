@@ -1,15 +1,13 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
 name: My workflow 2
-
 on:
   push:
     branches:
-      - '**'
-
+      - "**"
+  workflow_dispatch:
 env:
   is_main_branch: ${{ vars.ServiceNowUrl }}
-
 jobs:
   build:
     steps:

@@ -6,11 +6,13 @@ on:
     branches:
       - "**"
   workflow_dispatch:
+  
 env:
   is_main_branch: ${{ vars.foo }}
 
 jobs:
   build:
+    environment: dev
     steps:
       - name: Say hello
         uses: docker://golang:1.20.3-alpine3.17

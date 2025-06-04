@@ -166,16 +166,6 @@ jobs:
         uses: cloudbees-io/configure-ecr-credentials@v1
         kind: deploy
 
-      - name: Configure AWS credentials 
-        uses: cloudbees-io/configure-aws-credentials@v1
-        kind: deploy
-        id: aws-login-india-east-1
-        continue-on-error: false
-        with:
-          aws-region: india-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_SAASPREPROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SAASPREPROD }}
-
       - name: Configure EKS credentials
         uses: cloudbees-io/configure-eks-credentials@v1
         kind: deploy
@@ -216,16 +206,6 @@ jobs:
       - name: Configure Amazon ECR credentials
         uses: cloudbees-io/configure-ecr-credentials@v1
         kind: deploy
-
-      - name: Configure AWS credentials 
-        uses: cloudbees-io/configure-aws-credentials@v1
-        kind: deploy
-        id: aws-login-india-west-1
-        continue-on-error: false
-        with:
-          aws-region: india-west-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_SAASPREPROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SAASPREPROD }}
 
       - name: Configure EKS credentials
         uses: cloudbees-io/configure-eks-credentials@v1

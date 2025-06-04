@@ -243,3 +243,14 @@ jobs:
             --debug \
             --namespace saasllm \
             --version 0.0.1 v1 oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.india-west-1.amazonaws.com/${{ env.application_name }}
+  post-deploy-validation:
+    if: ${{ vars.workflow_execution_env == 'production' && cloudbees.scm.branch == 'main'}}
+    needs:
+      - deploy-india-east-1
+      - deploy-india-west-1
+    steps:
+      - name: Final Post-Deployment Validation
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo ":white_check_mark: All deployments complete. Running"

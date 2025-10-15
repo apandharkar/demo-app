@@ -4,7 +4,7 @@ name: My workflow 2
 on:
   push:
     branches:
-      - "**"
+      - "CBP-21126"
   workflow_dispatch:
   
 env:

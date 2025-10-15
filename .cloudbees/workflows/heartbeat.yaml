@@ -44,7 +44,7 @@ jobs:
           SCM_BRANCH: ${{ cloudbees.scm.branch }}
         run: |
           # NOTE: DataDog is  really really picky about the CI event format.  Be careful changing too much at once.
-          START="${{cloudbees.event.head_commit.timestamp}}"
+          #START="${{cloudbees.event.head_commit.timestamp}}"
           # SCM_EMAIL="${{cloudbees.event.head_commit.author.email}}"
           # DataDog can not handle the [bot] in the real email address
           SCM_EMAIL="qa-cloudbees-saas-smoketest@example.cloudbees.com"

@@ -1,0 +1,94 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: Heartbeat
+on:
+  push:
+    branches:
+      - "CBP-21126"
+
+env:
+  ORGANIZATION_URL: '${{ vars.ORGANIZATION_URL }}'
+  COMPONENT_ID: '${{ vars.COMPONENT_ID }}'
+  WORKFLOW_ID: '${{ vars.WORKFLOW_ID }}'
+  BRANCH_ID: '${{ vars.BRANCH_ID }}'
+  CLUSTER_ENVIRONMENT: '${{ vars.CLUSTER_ENVIRONMENT }}'
+
+permissions:
+  scm-token-own: read
+  scm-token-org: read
+
+jobs:
+  build:
+    steps:
+      - uses: cloudbees-io/checkout@v1
+        name: checkout
+        kind: build
+
+      - uses: cloudbees-io/configure-git-global-credentials@v1
+        name: configure-github-app
+        kind: build
+
+      - uses: docker://alpine/git
+        name: Exercise workflow - clone another repository
+        kind: build
+        run: |
+          set -eu
+          # Just chose a small repo to clone - must be under cloudbees
+          git clone https://github.com/cloudbees/docsite-utils --sparse --depth 1
+
+      - uses: docker://alpine/curl
+        name: DataDog CI Pipeline - success
+        kind: build
+        env:
+          DD_API_KEY: ${{secrets.DD_API_KEY}}
+          RUN_ID: ${{ cloudbees.run_id }}
+          SCM_SHA: ${{ cloudbees.scm.sha }}
+          SCM_BRANCH: ${{ cloudbees.scm.branch }}
+        run: |
+          # NOTE: DataDog is  really really picky about the CI event format.  Be careful changing too much at once.
+          START="${{cloudbees.event.head_commit.timestamp}}"
+          # SCM_EMAIL="${{cloudbees.event.head_commit.author.email}}"
+          # DataDog can not handle the [bot] in the real email address
+          SCM_EMAIL="qa-cloudbees-saas-smoketest@example.cloudbees.com"
+          END=$(date -Iseconds)
+          cat > payload.txt <<EOF
+          {
+            "data": {
+              "attributes": {
+                  "env": "${CLUSTER_ENVIRONMENT}",
+                  "resource": {
+                      "level": "pipeline",
+                      "unique_id": "${RUN_ID}",
+                      "start": "${START}",
+                      "end": "${END}",
+                      "partial_retry": false,
+                      "status": "success",
+                      "name": "qa-cloudbees-saas-smoketest",
+                      "node": {
+                        "name": "$(hostname)"
+                      },
+                      "pipeline_id": "${RUN_ID}",
+                      "git": {
+                        "repository_url": "https://github.com/apandharkar/demo-app",
+                        "sha": "${SCM_SHA}",
+                        "branch": "${SCM_BRANCH}",
+                        "author_email": "${SCM_EMAIL}"
+                      },
+                      "url": "${ORGANIZATION_URL}/components/${COMPONENT_ID}/runs/branches/${BRANCH_ID}/workflows/${WORKFLOW_ID}/runs/${RUN_ID}/attempts/1"
+                    }
+              },
+              "type": "cipipeline_resource_request"
+            }
+          }
+          EOF
+
+          cat payload.txt
+
+          curl \
+          --fail \
+          -X POST "https://api.datadoghq.com/api/v2/ci/pipeline" \
+          -H "Content-Type: application/json" \
+          -H "DD-API-KEY: $DD_API_KEY" \
+          -d @payload.txt
+
+          echo CI Pipeline Event sent

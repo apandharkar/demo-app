@@ -2,9 +2,7 @@ apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
 name: Heartbeat
 on:
-  push:
-    branches:
-      - "CBP-21126"
+  workflow_dispatch:
 
 env:
   ORGANIZATION_URL: '${{ vars.ORGANIZATION_URL }}'

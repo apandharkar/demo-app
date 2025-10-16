@@ -5,10 +5,10 @@ name: My automation
 on:
   # schedule:
   #   - cron: 0,6,12,18,24,30,36,42,48,54 * * * *
-  # push:
-  #   branches:
-  #     - 'main' 
- workflow_dispatch:
+  push:
+    branches:
+      - 'CBP-21126'
+  workflow_dispatch:
 
 env:
   ORGANIZATION_URL: '${{ vars.ORGANIZATION_URL }}'

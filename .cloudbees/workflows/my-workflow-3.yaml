@@ -6,13 +6,12 @@ on:
   push:
     branches:
       - '**'
-  workflow_dispatch:
 
 jobs:
   build:
     steps:
       - name: Say hello
-        uses: docker://golanggg:1.20.3-alpine3.17
+        uses: docker://golang:1.20.3-alpine3.17-test
         shell: sh
         run: |
           echo "hello world"

@@ -19,3 +19,4 @@ jobs:
         shell: sh
         run: |
           env
+          echo "Hello"

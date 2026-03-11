@@ -15,7 +15,7 @@ jobs:
       - name: Get source code
         uses: cloudbees-io/checkout@v2
         with:
-          repository: https://github.com/github.com/apandharkar/demo-app
+          repository: https://github.com/apandharkar/demo-app
 
       - name: Login to AWS Account
         uses: cloudbees-io/configure-aws-credentials@v1

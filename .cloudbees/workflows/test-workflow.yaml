@@ -22,7 +22,7 @@ jobs:
         id: aws-login
         with:
           aws-region: us-east-1
-          role-to-assume: "arn:aws:iam::709386575454:role/cloudbees-infra-mgmt"
+          role-to-assume: "arn:aws:iam::709386575454:role/qa-cloudbees-infra-mgmt"
           role-duration-seconds: "3600"
 
       - name: "Configure EKS credentials"

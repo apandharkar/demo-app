@@ -49,7 +49,7 @@ jobs:
       - name: "Configure EKS credentials"
         uses: cloudbees-io/configure-eks-credentials@v1
         with:
-          name: "tekton-qa-us-west-2-green"
+          name: "tekton-qa-us-west-2-gree"
           region: us-west-2
           alias: tekton_cluster_west_green
 

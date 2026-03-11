@@ -32,32 +32,32 @@ jobs:
           region: us-east-1
           alias: platform-east
 
-#      - name: "Configure EKS credentials"
-#        uses: cloudbees-io/configure-eks-credentials@v1
-#        with:
-#          name: "tekton-qa-us-east-1-gree"
-#          region: us-east-1
-#          alias: tekton_cluster_east_green
+      - name: "Configure EKS credentials"
+        uses: cloudbees-io/configure-eks-credentials@v1
+        with:
+          name: "tekton-qa-us-east-1-gree"
+          region: us-east-1
+          alias: tekton_cluster_east_green
 
-#      - name: "Configure EKS credentials"
-#        uses: cloudbees-io/configure-eks-credentials@v1
-#        with:
-#          name: "eks-qa-us-west-2"
-#          region: us-west-2
-#          alias: platform-west
+      - name: "Configure EKS credentials"
+        uses: cloudbees-io/configure-eks-credentials@v1
+        with:
+          name: "eks-qa-us-west-2"
+          region: us-west-2
+          alias: platform-west
 
-#      - name: "Configure EKS credentials"
-#        uses: cloudbees-io/configure-eks-credentials@v1
-#        with:
-#          name: "tekton-qa-us-west-2-green"
-#          region: us-west-2
-#          alias: tekton_cluster_west_green
+      - name: "Configure EKS credentials"
+        uses: cloudbees-io/configure-eks-credentials@v1
+        with:
+          name: "tekton-qa-us-west-2-green"
+          region: us-west-2
+          alias: tekton_cluster_west_green
 
       - name: kubectl command on the clusters
         uses: docker://ghcr.io/helmfile/helmfile:v1.1.3
         run: |
           kubectl config get-contexts
-           kubectl get pods -A
+          kubectl config current-context
           echo "============================="
           kubectl config use-context platform-east
           kubectl get pods -A

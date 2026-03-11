@@ -56,7 +56,6 @@ jobs:
       - name: kubectl command on the clusters
         uses: docker://ghcr.io/helmfile/helmfile:v1.1.3
         run: |
-          aws sts get-caller-identity
           kubectl config get-contexts
           echo "============================="
           kubectl config use-context platform-east

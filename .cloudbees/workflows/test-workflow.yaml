@@ -46,12 +46,12 @@ jobs:
           region: us-west-2
           alias: platform-west
 
-      - name: "Configure EKS credentials"
-        uses: cloudbees-io/configure-eks-credentials@v1
-        with:
-          name: "tekton-qa-us-west-2-green"
-          region: us-west-2
-          alias: tekton_cluster_west_green
+#      - name: "Configure EKS credentials"
+#        uses: cloudbees-io/configure-eks-credentials@v1
+#        with:
+#          name: "tekton-qa-us-west-2-green"
+#          region: us-west-2
+#          alias: tekton_cluster_west_green
 
       - name: kubectl command on the clusters
         uses: docker://ghcr.io/helmfile/helmfile:v1.1.3

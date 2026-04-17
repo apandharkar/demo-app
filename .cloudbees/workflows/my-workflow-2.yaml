@@ -7,8 +7,6 @@ on:
       - "**"
   workflow_dispatch:
   
-env:
-  is_main_branch: ${{ vars.foo }}
 
 jobs:
   build:

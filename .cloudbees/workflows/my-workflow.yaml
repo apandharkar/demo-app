@@ -7,10 +7,6 @@ on:
     branches:
       - '**'
 
-  push:
-    branches:
-      - 'main' 
-      
 jobs:
   build:
     steps:
@@ -18,4 +14,4 @@ jobs:
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
         run: |
-          echo "hello world 26 in qa in"
+          echo "hello world 27 in qa in"

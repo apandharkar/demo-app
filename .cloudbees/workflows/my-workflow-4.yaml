@@ -1,0 +1,21 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: My workflow
+on:
+  push:
+    branches:
+      - "**"
+jobs:
+  byebye:
+    steps:
+      - name: Say hello
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "hello world"
+      - name: say bye
+        uses: docker://golang:1.26-alpine3.22
+        shell: bash
+      - uses: cloudbees-io/checkout@v1
+    runs-on:
+      - default
